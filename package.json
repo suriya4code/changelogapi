@@ -1,0 +1,15 @@
+{
+  "name": "changelogapi",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "express": "^4.13.4",
+    "mongoose": "^5.9.7",
+    "nodemon": "^2.0.2"
+  }
+}
