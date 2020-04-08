@@ -53,6 +53,9 @@ router.get("/username", verifyToken, function (req, res, next) {
   return res.status(200).json(decodedToken.username);
 });
 
+router.get('/', (req, res) => {
+  return res.status(200).Send("I am up and running !!");
+});
 
 var decodedToken = "";
 function verifyToken(req, res, next) {
