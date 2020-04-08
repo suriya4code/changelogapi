@@ -59,7 +59,7 @@ function verifyToken(req, res, next) {
 
   jwt.verify(token, "suriya4code", function (err, tokendata) {
     if (err) {
-      return res.status(401 ).json({ message: "Unauthorized request" });
+      return res.status(401).json({ message: "Unauthorized request" });
     }
     if (tokendata) {
       decodedToken = tokendata;
