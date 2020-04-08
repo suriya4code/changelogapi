@@ -17,7 +17,16 @@ router.get("/", verifyToken, function (req, res, next) {
       );
   });
 });
-
+router.get("/public", function (req, res, next) {
+  changes.find((err, docs) => {
+    if (!err) {
+      res.send(docs);
+    } else
+      console.log(
+        "Error in retriving details from db : " + JSON.stringify(err)
+      );
+  });
+});
 router.post("/", verifyToken,function (req, res, next) {
   var chng = new changes({
     Title: req.body.Title,
