@@ -7,7 +7,6 @@ var jwt = require("jsonwebtoken");
 var client = Mongoose;
 /* GET users listing. */
 router.get("/", verifyToken, function (req, res, next) {
-  //res.json({ users: [{ name: "Timmy" }] });
   changes.find((err, docs) => {
     if (!err) {
       res.send(docs);
@@ -27,7 +26,7 @@ router.get("/public", function (req, res, next) {
       );
   });
 });
-router.post("/", verifyToken,function (req, res, next) {
+router.post("/", verifyToken, function (req, res, next) {
   var chng = new changes({
     Title: req.body.Title,
     Type: req.body.Type,
@@ -43,7 +42,7 @@ router.post("/", verifyToken,function (req, res, next) {
   }
 });
 
-router.delete("/", verifyToken,function (req, res, next) {
+router.delete("/", verifyToken, function (req, res, next) {
   const id = req.query.id;
   console.log(id);
   if (id != null) {
@@ -55,17 +54,23 @@ router.delete("/", verifyToken,function (req, res, next) {
 });
 var decodedToken = "";
 function verifyToken(req, res, next) {
-  let token = req.query.token;
-
-  jwt.verify(token, "suriya4code", function (err, tokendata) {
-    if (err) {
-      return res.status(401).json({ message: "Unauthorized request" });
-    }
-    if (tokendata) {
-      decodedToken = tokendata;
-      console.log("tkndta : " + JSON.stringify(decodedToken));
-      next();
-    }
-  });
+  //let token = req.query.token;
+  let token = req.header("Authorization");
+  let usermode = req.header("UserMode");
+  if (usermode == "local") {
+    jwt.verify(token, "suriya4code", function (err, tokendata) {
+      if (err) {
+        return res.status(401).json({ message: "Unauthorized request" });
+      }
+      if (tokendata) {
+        decodedToken = tokendata;
+        next();
+      }
+    });
+  } else if (usermode == "social") {
+    next();
+  } else {
+    return res.status(401).json({ message: "Unauthorized request" });
+  }
 }
 module.exports = router;
