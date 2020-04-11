@@ -37,7 +37,7 @@ router.post("/login", function (req, res, next) {
 
         return res.status(200).json(token);
       } else {
-        return res.status(201).json({ message: "Invalid Credentials" });
+        return res.status(401).json({ message: "Invalid Credentials" });
       }
     } else {
       return res.status(401).json({ message: "User is not registered yet." });
